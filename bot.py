@@ -143,4 +143,15 @@ app.job_queue.run_daily(
     time=time(hour=config.REMINDER_HOUR)
 )
 
-app.run_polling()
+import asyncio
+
+async def main():
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+    
+    # чтобы бот не завершался
+    await asyncio.Event().wait()
+
+if __name__ == "__main__":
+    asyncio.run(main())
