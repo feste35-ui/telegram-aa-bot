@@ -154,4 +154,17 @@ async def main():
     await asyncio.Event().wait()
 
 if __name__ == "__main__":
+    import asyncio
+
+async def keep_alive():
+    while True:
+        await asyncio.sleep(3600)
+
+async def main():
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+    await keep_alive()
+
+if __name__ == "__main__":
     asyncio.run(main())
